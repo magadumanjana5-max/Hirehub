@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Candidate Profile{% endblock %}
+{% block content %}
+<h2>Update profile</h2>
+<form method="post" class="card card-body">
+  <div class="row g-3">
+    <div class="col-md-6"><label class="form-label">First name</label><input class="form-control" name="first_name" value="{{ user.first_name }}"></div>
+    <div class="col-md-6"><label class="form-label">Last name</label><input class="form-control" name="last_name" value="{{ user.last_name }}"></div>
+    <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" type="tel" value="{{ user.phone or '' }}"></div>
+    <div class="col-md-6"><label class="form-label">Years of experience</label><input class="form-control" name="experience_years" type="number" min="0" value="{{ user.experience_years or 0 }}"></div>
+    <div class="col-md-6"><label class="form-label">Skills</label><input class="form-control" name="skills" value="{{ user.skills|join(', ') if user.skills else '' }}"></div>
+    <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" value="{{ user.location or '' }}"></div>
+    <div class="col-12"><label class="form-label">Preferred roles</label><input class="form-control" name="preferred_roles" value="{{ user.preferred_roles|join(', ') if user.preferred_roles else '' }}"></div>
+    <div class="col-12"><label class="form-label">Bio</label><textarea class="form-control" name="bio">{{ user.bio or '' }}</textarea></div>
+  </div>
+  <button class="btn btn-primary mt-3" type="submit">Save</button>
+</form>
+<section class="mt-4">
+  <h3>Resume</h3>
+  <form method="post" action="{{ url_for('candidate.upload_resume') }}" enctype="multipart/form-data" class="card card-body">
+    <label class="form-label" for="resume">Upload PDF, DOC, or DOCX</label>
+    <input class="form-control" id="resume" name="resume" type="file" accept=".pdf,.doc,.docx" required>
+    <button class="btn btn-outline-primary mt-3 align-self-start" type="submit">Upload resume</button>
+  </form>
+  {% if resumes %}
+  <ul class="list-group mt-3">
+    {% for resume in resumes %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ resume.filename }}
+      <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('candidate.download_resume', resume_id=resume.id) }}">Download</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endblock %}

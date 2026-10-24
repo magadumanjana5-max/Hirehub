@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Interview Scheduler{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Interview schedule</h2>
+</div>
+<form method="post" action="{{ url_for('recruiter.schedule_interview') }}" class="card card-body mb-4">
+  <h5>Schedule an interview</h5>
+  <div class="row g-3">
+    <div class="col-md-4"><label class="form-label" for="application_id">Candidate application</label><select class="form-select" id="application_id" name="application_id" required><option value="">Choose application</option>{% for application in applications %}<option value="{{ application.id }}">{{ application.candidate_name or application.candidate_email }} - {{ application.job_title }}</option>{% endfor %}</select></div>
+    <div class="col-md-3"><label class="form-label" for="scheduled_at">Date and time</label><input class="form-control" id="scheduled_at" name="scheduled_at" type="datetime-local" required></div>
+    <div class="col-md-2"><label class="form-label" for="mode">Mode</label><select class="form-select" id="mode" name="mode"><option value="virtual">Virtual</option><option value="in-person">In person</option></select></div>
+    <div class="col-md-3"><label class="form-label" for="notes">Notes</label><input class="form-control" id="notes" name="notes"></div>
+  </div>
+  <button class="btn btn-primary mt-3 align-self-start" type="submit">Schedule</button>
+</form>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Time</th>
+          <th>Mode</th>
+          <th>Stage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for interview in interviews %}
+        <tr>
+          <td>{{ interview.candidate_name or interview.candidate_id }}</td>
+          <td>{{ interview.scheduled_at }}</td>
+          <td>{{ interview.mode }}</td>
+          <td>{{ interview.notes }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center">No interviews scheduled.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

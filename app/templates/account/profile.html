@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Account Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h2 class="mb-4">Account profile</h2>
+    <form method="post" class="card card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="first_name">First name</label>
+          <input class="form-control" id="first_name" name="first_name" value="{{ user.first_name or '' }}" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="last_name">Last name</label>
+          <input class="form-control" id="last_name" name="last_name" value="{{ user.last_name or '' }}" required>
+        </div>
+        {% if user.role == 'recruiter' %}
+        <div class="col-md-6">
+          <label class="form-label" for="company_name">Company</label>
+          <input class="form-control" id="company_name" name="company_name" value="{{ user.company_name or '' }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="department">Department</label>
+          <input class="form-control" id="department" name="department" value="{{ user.department or '' }}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="phone">Phone</label>
+          <input class="form-control" id="phone" name="phone" value="{{ user.phone or '' }}">
+        </div>
+        {% endif %}
+      </div>
+      <button class="btn btn-primary mt-3 align-self-start" type="submit">Save profile</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

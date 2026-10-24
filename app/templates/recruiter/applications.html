@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Applications{% endblock %}
+{% block content %}
+<h2 class="mb-4">Candidate applications</h2>
+<div class="row g-3">
+  {% for application in applications %}
+  <div class="col-12">
+    <div class="card card-body">
+      <div class="d-flex justify-content-between flex-wrap gap-2">
+        <div>
+          <h5>{{ application.candidate_name or application.candidate_email }}</h5>
+          <p class="mb-1">{{ application.candidate_email }} · {{ application.job_title }}</p>
+          <span class="badge bg-primary">{{ application.status|title }}</span>
+          {% if application.resume_id %}
+          <p class="mt-2 mb-0"><a href="{{ url_for('features_api.download_resume', resume_id=application.resume_id) }}">Download attached resume</a></p>
+          {% endif %}
+        </div>
+        <form class="d-flex gap-2 align-items-start" method="post" action="{{ url_for('recruiter.update_application_status', application_id=application.id) }}">
+          <select class="form-select" name="status" aria-label="Application status">
+            {% for status in ['applied', 'screening', 'interview', 'rejected', 'offered', 'hired'] %}
+            <option value="{{ status }}" {% if application.status == status %}selected{% endif %}>{{ status|title }}</option>
+            {% endfor %}
+          </select>
+          <button class="btn btn-outline-primary" type="submit">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="col-12"><p class="alert alert-info">No applications received for your jobs yet.</p></div>
+  {% endfor %}
+</div>
+{% endblock %}

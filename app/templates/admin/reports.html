@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h2 class="mb-4">Reports</h2>
+<a class="btn btn-outline-primary mb-3" href="{{ url_for('admin.export_reports') }}">Download CSV report</a>
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card card-body">
+      <h5>Hiring summary</h5>
+      <p class="mb-1">Total jobs posted: {{ stats.total_jobs }}</p>
+      <p class="mb-1">Applications received: {{ stats.total_applications }}</p>
+      <p class="mb-0">Open jobs: {{ stats.open_jobs }}</p>
+      {% if report.applications_by_status %}
+      <hr>
+      <h6>Applications by status</h6>
+      <ul class="mb-0">
+        {% for status, count in report.applications_by_status.items() %}
+        <li>{{ status|title }}: {{ count }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card card-body">
+      <h5>Audit activity</h5>
+      <p class="mb-0">See the <a href="{{ url_for('admin.audit_logs') }}">audit log</a> for recorded account and hiring activity.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

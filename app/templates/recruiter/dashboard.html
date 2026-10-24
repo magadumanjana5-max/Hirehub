@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Recruiter Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h2>Recruiter dashboard</h2>
+  <a class="btn btn-primary" href="{{ url_for('recruiter.jobs') }}">Create job</a>
+</div>
+<div class="card card-body">
+  {% for job in jobs %}
+    <div class="border rounded p-3 mb-2">
+      <h5>{{ job.title }}</h5>
+      <p>{{ job.company_name }} | {{ job.location }}</p>
+      <p><span class="badge bg-secondary">{{ job.status|title }}</span></p>
+      <form method="post" action="{{ url_for('recruiter.update_job_status', job_id=job.id) }}">
+        {% if job.status == 'open' %}
+        <input type="hidden" name="status" value="closed">
+        <button class="btn btn-sm btn-outline-danger" type="submit">Close job</button>
+        {% else %}
+        <input type="hidden" name="status" value="open">
+        <button class="btn btn-sm btn-outline-success" type="submit">Reopen job</button>
+        {% endif %}
+      </form>
+    </div>
+  {% else %}
+    <p>No active jobs yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

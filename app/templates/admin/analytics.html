@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Analytics{% endblock %}
+{% block content %}
+<h2 class="mb-4">Analytics dashboard</h2>
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card card-body">
+      <h6>Total jobs</h6>
+      <h2>{{ stats.total_jobs }}</h2>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-body">
+      <h6>Total applications</h6>
+      <h2>{{ stats.total_applications }}</h2>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-body">
+      <h6>Total users</h6>
+      <h2>{{ stats.total_users }}</h2>
+    </div>
+  </div>
+</div>
+<div class="card mt-4">
+  <div class="card-body">
+    <h5>Hiring overview</h5>
+    <canvas id="hiringChart" aria-label="Jobs and applications overview" role="img"></canvas>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+  new Chart(document.getElementById('hiringChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Jobs', 'Open jobs', 'Applications', 'Users'],
+      datasets: [{
+        label: 'HireHub totals',
+        data: [{{ stats.total_jobs }}, {{ stats.open_jobs }}, {{ stats.total_applications }}, {{ stats.total_users }}],
+        backgroundColor: ['#0d6efd', '#20c997', '#6f42c1', '#fd7e14']
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+</script>
+{% endblock %}

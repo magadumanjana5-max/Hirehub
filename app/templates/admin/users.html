@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}User Management{% endblock %}
+{% block content %}
+<h2 class="mb-4">User management</h2>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in users %}
+        <tr>
+          <td>{{ record.first_name or 'Unknown' }} {{ record.last_name or '' }}</td>
+          <td>{{ record.email }}</td>
+          <td>{{ record.role|title }}</td>
+          <td><span class="badge bg-success">Active</span></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center">No users found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

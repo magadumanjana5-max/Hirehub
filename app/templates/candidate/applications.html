@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}My Applications{% endblock %}
+{% block content %}
+<h2 class="mb-4">My Applications</h2>
+{% if applications %}
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>Job Title</th>
+          <th>Company</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Applied</th>
+          <th>Resume</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for application in applications %}
+        <tr>
+          <td>{{ application.job_title }}</td>
+          <td>{{ application.company }}</td>
+          <td>{{ application.location }}</td>
+          <td><span class="badge bg-primary">{{ application.status|title }}</span></td>
+          <td>{{ application.applied_at }}</td>
+          <td>{% if application.resume_id %}<a href="{{ url_for('features_api.download_resume', resume_id=application.resume_id) }}">Download</a>{% else %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="card card-body">
+  <p>No application records yet. Apply to jobs to see them here.</p>
+</div>
+{% endif %}
+{% endblock %}

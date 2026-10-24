@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}HireHub | Jobs Marketplace{% endblock %}
+{% block content %}
+<div class="row align-items-center hero">
+    <div class="col-lg-7">
+        <h1 class="display-5 fw-bold">Find the right role. Join the right team.</h1>
+        <p class="lead">HireHub helps candidates explore opportunities and recruiters hire top talent faster.</p>
+        <div class="d-flex gap-3">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Get Started</a>
+            <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('job.list_jobs') }}">Browse Jobs</a>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow-sm p-4">
+            <h3>Why HireHub?</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Role-based access for candidates, recruiters, and admins</li>
+                <li class="list-group-item">Seamless resume uploads and job applications</li>
+                <li class="list-group-item">Real-time analytics and hiring insights</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

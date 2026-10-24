@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2>Admin analytics</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card card-body"><h5>Total jobs</h5><h2>{{ stats.total_jobs }}</h2></div></div>
+  <div class="col-md-4"><div class="card card-body"><h5>Total applications</h5><h2>{{ stats.total_applications }}</h2></div></div>
+  <div class="col-md-4"><div class="card card-body"><h5>Total users</h5><h2>{{ stats.total_users }}</h2></div></div>
+</div>
+<p>Open jobs: {{ stats.open_jobs }}</p>
+{% endblock %}

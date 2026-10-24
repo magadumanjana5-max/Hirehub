@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<h2 class="mb-4">Notifications</h2>
+<div class="list-group">
+  {% for item in notifications|sort(attribute='created_at', reverse=true) %}
+  <div class="list-group-item">
+    <p class="mb-1">{{ item.message }}</p>
+    <small class="text-muted">{{ item.created_at }}</small>
+  </div>
+  {% else %}
+  <p class="alert alert-info">You have no notifications.</p>
+  {% endfor %}
+</div>
+{% endblock %}

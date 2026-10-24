@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Audit Logs{% endblock %}
+{% block content %}
+<h2 class="mb-4">Audit logs</h2>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+      <tbody>
+        {% for record in logs %}
+        <tr>
+          <td>{{ record.created_at }}</td>
+          <td>{{ record.user_id }}</td>
+          <td>{{ record.action }}</td>
+          <td>{{ record.details }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center">No audit activity yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
